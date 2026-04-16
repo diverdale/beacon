@@ -1,7 +1,5 @@
-import json
 import pytest
 from app.models import User
-from app.database import db
 
 
 @pytest.fixture
