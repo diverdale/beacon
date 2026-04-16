@@ -1,8 +1,5 @@
 # NOTE: Only happy-path tests — intentional for training purposes.
 # Missing: 404 handling, duplicate names, invalid input.
-import pytest
-from app.models import Project
-
 
 def test_create_project(client, db):
     resp = client.post(
