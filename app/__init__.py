@@ -10,8 +10,7 @@ def create_app(config=None):
         "DATABASE_URL", "sqlite:///beacon.db"
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret")
-    app.config["TESTING"] = False
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY") or "dev-secret-do-not-use-in-production"
 
     if config:
         app.config.update(config)
