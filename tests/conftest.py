@@ -7,7 +7,7 @@ from app.database import db as _db
 def app():
     app = create_app({
         "TESTING": True,
-        "PROPAGATE_EXCEPTIONS": False,
+        "PROPAGATE_EXCEPTIONS": False,  # allows intentional 500s in tasks GET /<id> to return a response rather than raise in tests
         "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
     })
     with app.app_context():

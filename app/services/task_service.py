@@ -24,12 +24,15 @@ def create_task(title, project_id=None, assignee_id=None, description="", due_da
     return task
 
 
+_UPDATABLE_FIELDS = {"title", "description", "status", "due_date", "assignee_id", "project_id"}
+
+
 def update_task(task_id, **kwargs):
     task = db.session.get(Task, task_id)
     if not task:
         return None
     for key, value in kwargs.items():
-        if hasattr(task, key):
+        if key in _UPDATABLE_FIELDS:
             setattr(task, key, value)
     db.session.commit()
     return task
@@ -70,7 +73,8 @@ def update_task_status(task_id, new_status):
 
 
 # BUG 3: is_overdue uses strict > instead of >= for same-day due dates.
-# Tasks due today are reported as not overdue until tomorrow.
+# A task whose due_date equals the exact current timestamp is reported as
+# not yet overdue. The fix is to use >= so the boundary instant counts as overdue.
 def is_overdue(task):
     if not task.due_date or task.status in ("done", "archived"):
         return False
