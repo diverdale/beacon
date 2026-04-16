@@ -1,8 +1,8 @@
 from flask import Blueprint
 from .users import users_bp
+from .projects import projects_bp
 
-# Stubs — filled in Tasks 4 and 5
-projects_bp = Blueprint("projects", __name__, url_prefix="/api/projects")
+# Stub — filled in Task 5
 tasks_bp = Blueprint("tasks", __name__, url_prefix="/api/tasks")
 
 
