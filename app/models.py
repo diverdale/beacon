@@ -17,7 +17,7 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "email": self.email,
-            "created_at": self.created_at.isoformat(),
+            "created_at": self.created_at.isoformat() if self.created_at else None,
         }
 
 
@@ -36,13 +36,16 @@ class Project(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "created_at": self.created_at.isoformat(),
+            "created_at": self.created_at.isoformat() if self.created_at else None,
         }
 
 
 class Task(db.Model):
     __tablename__ = "tasks"
 
+    # Reference tuple for valid statuses. Enforcement is intentionally left to the
+    # service layer — see task_service.update_task_status(). Do not add ORM-level
+    # validation here; the missing enforcement is a deliberate training exercise.
     VALID_STATUSES = ("todo", "in_progress", "done", "archived")
 
     id = db.Column(db.Integer, primary_key=True)
