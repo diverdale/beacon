@@ -17,6 +17,8 @@ def create_app(config=None):
 
     db.init_app(app)
 
+    from . import models  # noqa: F401 — registers models with SQLAlchemy
+
     from .routes import register_blueprints
     register_blueprints(app)
 
